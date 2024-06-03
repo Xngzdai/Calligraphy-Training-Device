@@ -7,8 +7,6 @@ import sys
 import signal
 import time
 
-/Users/daixingze/Downloads/ME327/project/Processing/data/liu.png
-
 #------------ Constants --------------#
 CUR_PATH = os.getcwd()
 
@@ -231,7 +229,7 @@ def compute_force(gradient: np.array, left_angle: float, right_angle: float) -> 
     # ############################# END PART (b) ##############################
 
 #------------ Load Canvas --------------#
-map = np.load(os.path.join(CUR_PATH, "map" + MAP_LIST[choice]))
+map = np.load(os.path.join(CUR_PATH, "map", MAP_LIST[choice]))
 assert np.all(map.shape == (2, 225, 225))
 
 #---------- memory variables -----------#
