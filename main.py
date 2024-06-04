@@ -199,8 +199,9 @@ def forward_kinematics(left_angle: float, right_angle: float) -> np.array:
     x3 = Ph_x + (d_P3_PH / d_P4_P2) * (y4 - y2)
     y3 = Ph_y - (d_P3_PH / d_P4_P2) * (x4 - x2)
 
-    x3 = -x3
-    y3 -= 0.22
+    # Emperical hardware offset
+    x3 = -x3 - 0.0455
+    y3 -= 0.19
 
     Jv = Jacobian(L1, L2, L3, L4, theta1, theta5, x2, y2, x3, y3, x4, y4, Ph_x, Ph_y)
     
@@ -294,8 +295,8 @@ with c:
         print("pixel pos: ", pixel_pos)
 
         # Find the gradient
-        grad = map[:, pixel_pos[0], pixel_pos[1]] / 25
-        # print(pixel_pos, map.shape, grad.shape)
+        grad = map[:, pixel_pos[0], pixel_pos[1]] * 2
+        print("grad: ", grad)
 
         # Calculate the force array
         torque = compute_force(gradient=grad, left_angle=left_angle, right_angle=right_angle)
