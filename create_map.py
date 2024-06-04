@@ -43,14 +43,16 @@ for image_file in image_files:
 
         # save a copy as background for processing
         resized_img.save(os.path.join(cur_path, "Processing/data", image_file))
+        resized_img_np = np.asarray(resized_img)
 
         # create (gradient) map
-        blurred_img = resized_img.filter(ImageFilter.GaussianBlur(5))
-        # blurred_img.show()
-        # threshold_img = resized_img.point( lambda p: 255 if p > 100 else 0)
-        # binary_img = threshold_img.convert('1')
-        img_np = np.asarray(blurred_img)
-        grad_row, grad_col = np.gradient(img_np)
+        blurred_img = resized_img.filter(ImageFilter.GaussianBlur(7))
+        blurred_img_np = np.asarray(blurred_img)
+
+        augment_img_np = (resized_img_np + blurred_img_np).astype(float)
+        augment_img_np /= augment_img_np.max() # normalize
+
+        grad_row, grad_col = np.gradient(augment_img_np)
         map = np.stack((grad_row, grad_col), axis=0)
         np.save(os.path.join(cur_path, "map", image_file[:-4]+".npy"), map)
         # img_list.append(np.asarray(binary_img))
