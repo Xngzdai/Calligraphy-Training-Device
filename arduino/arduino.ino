@@ -120,11 +120,12 @@ void loop()
   double rh = 0.0889;   //[m]
   // Step B.1: print updatedPos via serial monitor
   // Serial.println(updatedPos);
-  // Step B.6: double ts = ?; // Compute the angle of the sector pulley (ts) in degrees based on updatedPos
+  // Compute the angle of the sector pulley (ts) in degrees based on updatedPos
   double ts = 0.0128 * updatedPos - 1.4885;
-  // double ts = 0.0128 * updatedPos - 0.7442;
-  // Step B.7: xh = ?;       // Compute the position of the handle (in meters) based on ts (in radians)
-  // xh = rh * sin(ts * PI / 180.0);
+  // Left
+  // ts = 0.0118 * updatedPos - 1.37; 
+  //Right
+  ts = 0.011 * updatedPos - 9.69;
   // Step B.8: print xh via serial monitor
   while (!Serial.available());
   double torque = Serial.readString().toFloat();
